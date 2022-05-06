@@ -1,0 +1,2 @@
+variable "EnvName" {}
+variable "VpcId" {}
