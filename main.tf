@@ -22,32 +22,24 @@ module "ECSCluster" {
 }
 
 
-module "TaskDefinitiontechops" {
-  source              = "./modules/task_definition"
-  EnvName             = var.EnvName
-  Name                = "techops"
-  TaskDefRole         = module.ecs-role.TaskDefRoleArn
-  Settings            = var.Ecs.TaskDefinitions.techops
-}
-
-
 module "Servicetechops" {
-  source                = "./modules/service"
-  EnvName               = var.EnvName
-  Name                  = "techops"
-  TaskDefRole           = module.ecs-role.TaskDefRoleArn
-  Settings              = var.Ecs
-  ECSClusterName        = module.ECSCluster.ECSClusterName
-  TaskDefinition        = module.TaskDefinitiontechops.TaskDefinitiontechops[0]
+  source         = "./modules/service"
+  EnvName        = var.EnvName
+  Name           = "techops"
+  TaskDefRole    = module.ecs-role.TaskDefRoleArn
+  Settings       = var.Ecs
+  ECSClusterName = module.ECSCluster.ECSClusterName
+  TaskDefinition = "arn:aws:ecs:ca-central-1:663828089113:task-definition/flask:5"
   TargetGroupArntechops = module.alb.TargetGroupArntechops
-  subnet_id = module.vpc.public_subnets
-  security_group_id = module.security_group.InstanceSecurityGroupId
+  subnet_id             = module.vpc.public_subnets
+  security_group_id     = module.security_group.InstanceSecurityGroupId
 }
 
 # autoscaling module #
 module "autoscaling_group_techops" {
-  source                  = "./modules/autoscaling_group"
-resource_id = "service/${module.ECSCluster.ECSClusterName}/${module.Servicetechops.servicename}"
+  source      = "./modules/autoscaling_group"
+  EnvName     = var.EnvName
+  resource_id = "service/${module.ECSCluster.ECSClusterName}/${module.Servicetechops.servicename}"
 }
 
 
@@ -58,6 +50,5 @@ module "alb" {
   PublicSubnetId              = module.vpc.public_subnets
   VpcId                       = module.vpc.vpc_id
   LoadBalancerSecurityGroupId = module.security_group.LoadBalancerSecurityGroupId
-  AutoScalingGrouptechops     = module.autoscaling_group_techops.AutoScalingGrouptechopsName
 }
 

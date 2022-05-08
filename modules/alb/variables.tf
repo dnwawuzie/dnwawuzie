@@ -3,6 +3,6 @@ variable "Settings" {}
 
 variable "LoadBalancerSecurityGroupId" {}
 variable "EnvName" {}
-variable "AutoScalingGrouptechops" {}
+# variable "AutoScalingGrouptechops" {}
 
 variable "PublicSubnetId" {}

@@ -1,8 +1,8 @@
-AwsRegion = "ea-central-1"
+AwsRegion = "ca-central-1"
 
 vpc = {
   vpc_cidr        = "10.0.0.0/16"
-  azs             = ["ea-central-1a", "ea-central-1b", "ea-central-1c"]
+  azs             = ["ca-central-1a", "ca-central-1b", "ca-central-1d"]
   private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
 }
@@ -37,7 +37,7 @@ Ecs = {
   }
 }
 
-EnvName   = "ECS"
+EnvName = "ECS"
 
 
 
